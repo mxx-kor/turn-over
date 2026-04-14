@@ -27,23 +27,15 @@ The app is fully open source. You can review every line of code in this reposito
 
 ### How to open the app
 
-**Option 1 — Right-click method (easiest)**
+**System Settings**
 
-1. Right-click (or Control+click) `Turn-Over.app`
-2. Select **Open**
-3. Click **Open** in the dialog that appears
+<img width="716" height="393" alt="스크린샷 2026-04-14 오후 9 43 35" src="https://github.com/user-attachments/assets/bb151405-3acf-4d8b-91b0-8a3d8a94a313" />
 
-**Option 2 — System Settings**
+<img width="510" height="481" alt="스크린샷 2026-04-14 오후 9 43 42" src="https://github.com/user-attachments/assets/9aea22f4-81e9-45d1-961b-6e656fde039f" />
 
 1. Try to open the app normally — macOS will block it
 2. Go to **System Settings → Privacy & Security**
 3. Scroll down and click **Open Anyway**
-
-**Option 3 — Terminal**
-
-```bash
-xattr -cr /Applications/Turn-Over.app
-```
 
 Then open the app normally.
 
@@ -75,23 +67,15 @@ Turn-Over는 **Apple Developer 인증서로 서명되지 않았습니다.** 앱�
 
 ### 앱 여는 방법
 
-**방법 1 — 우클릭 (가장 쉬움)**
+**방법 - 시스템 설정**
 
-1. `Turn-Over.app`을 우클릭 (또는 Control+클릭)
-2. **열기** 선택
-3. 팝업에서 **열기** 클릭
+<img width="716" height="393" alt="스크린샷 2026-04-14 오후 9 43 35" src="https://github.com/user-attachments/assets/bb151405-3acf-4d8b-91b0-8a3d8a94a313" />
 
-**방법 2 — 시스템 설정**
+<img width="510" height="481" alt="스크린샷 2026-04-14 오후 9 43 42" src="https://github.com/user-attachments/assets/9aea22f4-81e9-45d1-961b-6e656fde039f" />
 
 1. 앱을 일반적으로 열기 시도 — macOS가 차단함
 2. **시스템 설정 → 개인 정보 보호 및 보안** 이동
 3. 하단에서 **확인 없이 열기** 클릭
-
-**방법 3 — 터미널**
-
-```bash
-xattr -cr /Applications/Turn-Over.app
-```
 
 이후 앱을 정상적으로 열기
 
