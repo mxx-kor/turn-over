@@ -10,9 +10,10 @@ import {
   Tray,
   Menu,
   nativeImage,
+  utilityProcess,
 } from 'electron';
 import path from 'path';
-import { exec, spawn, ChildProcess } from 'child_process';
+import { exec } from 'child_process';
 
 app.setName('Turn-Over');
 
@@ -22,7 +23,7 @@ const BASE_URL = `http://localhost:${PORT}`;
 
 let mainWindow: BrowserWindow | null = null;
 let popupWindow: BrowserWindow | null = null;
-let nextProcess: ChildProcess | null = null;
+let nextProcess: Electron.UtilityProcess | null = null;
 let tray: Tray | null = null;
 let isQuitting = false;
 // Holds the http://localhost:3000/auth/callback?code=... URL to navigate to
@@ -104,14 +105,14 @@ function startNextServer(): Promise<void> {
 
     const serverPath = path.join(process.resourcesPath, 'app', 'server.js');
 
-    nextProcess = spawn(process.execPath, [serverPath], {
+    nextProcess = utilityProcess.fork(serverPath, [], {
       env: {
         ...process.env,
-        ELECTRON_RUN_AS_NODE: '1',
         PORT: String(PORT),
         NODE_ENV: 'production',
         HOSTNAME: '127.0.0.1',
       },
+      stdio: 'pipe',
     });
 
     nextProcess.stdout?.on('data', (data: Buffer) => {

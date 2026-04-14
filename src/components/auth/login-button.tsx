@@ -20,7 +20,7 @@ export function LoginButton() {
         const { data, error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: 'http://localhost:3000/auth/callback?via=electron',
+            redirectTo: 'turnover://auth',
             skipBrowserRedirect: true,
           },
         });
@@ -32,7 +32,9 @@ export function LoginButton() {
         }
 
         if (!data.url) {
-          setErrorMsg('No URL returned from Supabase — check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.');
+          setErrorMsg(
+            'No URL returned from Supabase — check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
+          );
           setIsLoading(false);
           return;
         }
@@ -68,7 +70,9 @@ export function LoginButton() {
         {isLoading ? 'Waiting for browser...' : 'Continue with Google'}
       </Button>
       {errorMsg && (
-        <p className="text-sm text-red-500 text-center break-words">{errorMsg}</p>
+        <p className="text-sm text-red-500 text-center break-words">
+          {errorMsg}
+        </p>
       )}
     </div>
   );
