@@ -107,6 +107,7 @@ function startNextServer(): Promise<void> {
     nextProcess = spawn(process.execPath, [serverPath], {
       env: {
         ...process.env,
+        ELECTRON_RUN_AS_NODE: '1',
         PORT: String(PORT),
         NODE_ENV: 'production',
         HOSTNAME: '127.0.0.1',
@@ -283,15 +284,15 @@ async function getSelectedText(): Promise<string> {
     return new Promise((resolve) => {
       exec(
         `osascript` +
-        ` -e 'try'` +
-        ` -e '  tell application "System Events"'` +
-        ` -e '    set frontProc to first application process whose frontmost is true'` +
-        ` -e '    set focusedEl to value of attribute "AXFocusedUIElement" of frontProc'` +
-        ` -e '    return value of attribute "AXSelectedText" of focusedEl'` +
-        ` -e '  end tell'` +
-        ` -e 'on error'` +
-        ` -e '  return ""'` +
-        ` -e 'end try'`,
+          ` -e 'try'` +
+          ` -e '  tell application "System Events"'` +
+          ` -e '    set frontProc to first application process whose frontmost is true'` +
+          ` -e '    set focusedEl to value of attribute "AXFocusedUIElement" of frontProc'` +
+          ` -e '    return value of attribute "AXSelectedText" of focusedEl'` +
+          ` -e '  end tell'` +
+          ` -e 'on error'` +
+          ` -e '  return ""'` +
+          ` -e 'end try'`,
         (err, stdout) => {
           if (err) {
             console.error('osascript AX error:', err.message);
@@ -381,18 +382,13 @@ app.whenReady().then(async () => {
   await startNextServer();
   createTray();
 
-  const registered = globalShortcut.register(
-    'Alt+Shift+A',
-    async () => {
-      const selectedText = await getSelectedText();
-      createPopupWindow(selectedText);
-    },
-  );
+  const registered = globalShortcut.register('Alt+Shift+A', async () => {
+    const selectedText = await getSelectedText();
+    createPopupWindow(selectedText);
+  });
 
   if (!registered) {
-    console.warn(
-      'Global shortcut Alt+Shift+A could not be registered.',
-    );
+    console.warn('Global shortcut Alt+Shift+A could not be registered.');
   }
 
   app.on('activate', () => {
