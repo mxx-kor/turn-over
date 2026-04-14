@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Standalone output for Electron production packaging
+  output: "standalone",
 };
 
 export default nextConfig;
