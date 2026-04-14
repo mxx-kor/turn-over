@@ -2,12 +2,6 @@
 
 A flashcard app that lets you save words instantly with a global shortcut — wherever you are.
 
-**Note:** The Intel version download link has been updated to:
-
-```
-https://github.com/mxx-kor/turn-over/releases/download/intel/Turn-Over-0.1.0.dmg
-```
-
 Update the macOS (Intel) row in the Download table accordingly.
 
 ## Download
