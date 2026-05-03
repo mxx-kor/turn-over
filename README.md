@@ -2,14 +2,12 @@
 
 A flashcard app that lets you save words instantly with a global shortcut — wherever you are.
 
-Update the macOS (Intel) row in the Download table accordingly.
-
 ## Download
 
 | Platform                         | File                                                                                                                  |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| macOS (Apple Silicon · M1/M2/M3) | [Turn-Over-0.1.0-arm64.dmg](https://github.com/mxx-kor/turn-over/releases/download/release/Turn-Over-0.1.0-arm64.dmg) |
-| macOS (Intel)                    | [Turn-Over-0.1.0.dmg](https://github.com/mxx-kor/turn-over/releases/download/release/Turn-Over-0.1.0.dmg)             |
+| macOS (Apple Silicon · M1/M2/M3) | [Turn-Over-0.1.1-arm64.dmg](https://github.com/mxx-kor/turn-over/releases/download/v0.1.1/Turn-Over-0.1.1-arm64.dmg) |
+| macOS (Intel)                    | [Turn-Over-0.1.1.dmg](https://github.com/mxx-kor/turn-over/releases/download/v0.1.1/Turn-Over-0.1.1.dmg)             |
 
 ---
 

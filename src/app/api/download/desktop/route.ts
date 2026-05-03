@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 const DEFAULT_DOWNLOAD_URL =
-  'https://github.com/mxx-kor/turn-over/releases/download/release/Turn-Over-0.1.0-arm64.dmg';
+  'https://github.com/mxx-kor/turn-over/releases/download/v0.1.1/Turn-Over-0.1.1-arm64.dmg';
 
 function getDownloadUrl() {
   const isProduction = process.env.NODE_ENV === 'production';
