@@ -10,6 +10,7 @@
     "lint": "eslint",
     "electron:compile": "tsc --project electron/tsconfig.json",
     "electron:dev": "npm run electron:compile && concurrently -k -s first -n \"NEXT,ELECTRON\" --prefix-colors \"cyan,yellow\" \"next dev\" \"wait-on http://localhost:3000 && cross-env NODE_ENV=development electron .\"",
+    "electron:dev:remote": "npm run electron:compile && cross-env NODE_ENV=development ELECTRON_BASE_URL=https://turn-over-eight.vercel.app electron .",
     "electron:build": "next build && npm run electron:compile && electron-builder",
     "electron:pack": "next build && npm run electron:compile && electron-builder --dir"
   },

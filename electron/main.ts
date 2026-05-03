@@ -19,15 +19,18 @@ app.setName('Turn-Over');
 
 const isDev = !app.isPackaged;
 const PORT = 3000;
-const BASE_URL = `http://localhost:${PORT}`;
+const PRODUCTION_BASE_URL = 'https://turn-over-eight.vercel.app';
+const REMOTE_BASE_URL =
+  process.env.ELECTRON_BASE_URL ?? (isDev ? undefined : PRODUCTION_BASE_URL);
+const BASE_URL = REMOTE_BASE_URL ?? `http://localhost:${PORT}`;
 
 let mainWindow: BrowserWindow | null = null;
 let popupWindow: BrowserWindow | null = null;
 let nextProcess: Electron.UtilityProcess | null = null;
 let tray: Tray | null = null;
 let isQuitting = false;
-// Holds the http://localhost:3000/auth/callback?code=... URL to navigate to
-// once the main window is ready (used when the app was closed during OAuth).
+// Holds the callback URL to navigate to once the main window is ready
+// (used when the app was closed during OAuth).
 let pendingAuthUrl: string | null = null;
 
 // Register turnover:// as a custom URL scheme so the OS can route deep links
@@ -95,10 +98,13 @@ app.on('open-url', (event, url) => {
   handleAuthDeepLink(url);
 });
 
-// Production: Start the Next.js standalone server
+// Start the local Next.js standalone server only when no external app URL is configured.
 function startNextServer(): Promise<void> {
   return new Promise((resolve) => {
-    if (isDev) {
+    if (isDev || REMOTE_BASE_URL) {
+      if (!isDev && REMOTE_BASE_URL) {
+        console.log('[Electron] External app URL configured, skipping local Next.js server.');
+      }
       resolve();
       return;
     }
@@ -215,7 +221,8 @@ function createMainWindow() {
     },
   });
 
-  mainWindow.loadURL(BASE_URL);
+  const initialUrl = `${BASE_URL}/login`;
+  mainWindow.loadURL(initialUrl);
 
   // If a deep-link arrived before the window was created, navigate to the auth
   // callback URL as soon as the initial page finishes loading.

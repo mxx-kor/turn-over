@@ -9,9 +9,7 @@ import { HowItWorksDemo } from '@/components/auth/how-it-works-demo';
 type Step = 'select' | 'login';
 type Platform = 'desktop' | 'web';
 
-const DOWNLOAD_URL =
-  process.env.NEXT_PUBLIC_DESKTOP_DOWNLOAD_URL ??
-  'https://github.com/mxx-kor/turn-over/releases';
+const DOWNLOAD_ENDPOINT = '/api/download/desktop';
 
 export function LandingPage() {
   const [step, setStep] = useState<Step>('select');
@@ -21,7 +19,7 @@ export function LandingPage() {
     if (p === 'desktop') {
       // 다운로드 시작 후 로그인 화면으로 이동 (다운로드 중 로그인 가능)
       const link = document.createElement('a');
-      link.href = DOWNLOAD_URL;
+      link.href = DOWNLOAD_ENDPOINT;
       link.download = '';
       document.body.appendChild(link);
       link.click();
