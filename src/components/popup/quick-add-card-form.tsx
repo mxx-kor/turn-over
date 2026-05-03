@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { X, CheckCircle2, Loader2, Wand2 } from 'lucide-react';
@@ -38,7 +38,7 @@ export function QuickAddCardForm() {
   const abortController = useRef<AbortController | null>(null);
   const backEditedByUser = useRef(false);
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   function cancelTranslation() {
     if (debounceTimer.current) clearTimeout(debounceTimer.current);
@@ -85,22 +85,7 @@ export function QuickAddCardForm() {
     };
   }, [front, autoTranslateEnabled]);
 
-  useEffect(() => {
-    loadFolders();
-
-    if (typeof window !== 'undefined' && window.electron) {
-      window.electron.onUpdateSelectedText((text: string) => {
-        setFront(text);
-        setBack('');
-        backEditedByUser.current = false;
-        setAutoTranslated(false);
-        setSuccess(false);
-        setError('');
-      });
-    }
-  }, []);
-
-  async function loadFolders() {
+  const loadFolders = useCallback(async () => {
     try {
       const {
         data: { user },
@@ -133,7 +118,22 @@ export function QuickAddCardForm() {
     } finally {
       setLoading(false);
     }
-  }
+  }, [supabase]);
+
+  useEffect(() => {
+    loadFolders();
+
+    if (typeof window !== 'undefined' && window.electron) {
+      window.electron.onUpdateSelectedText((text: string) => {
+        setFront(text);
+        setBack('');
+        backEditedByUser.current = false;
+        setAutoTranslated(false);
+        setSuccess(false);
+        setError('');
+      });
+    }
+  }, [loadFolders]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

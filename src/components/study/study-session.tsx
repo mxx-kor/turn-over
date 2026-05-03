@@ -73,9 +73,9 @@ export function StudySession({ initialCards }: { initialCards: CardType[] }) {
   const safeIndex = Math.min(currentIndex, orderedCards.length - 1);
   const currentCard = orderedCards[safeIndex];
 
-  // To prevent severe performance degradation when there are too many items (e.g., 100,000+ cards),
-  // we use a continuous progress bar instead of individual nodes if the number is large.
-  const isLargeSet = orderedCards.length > 50;
+  // Dense dot indicators become hard to scan around this point, so use a
+  // continuous progress bar instead.
+  const isLargeSet = orderedCards.length >= 28;
 
   return (
     <div className="w-full max-w-md flex flex-col items-center">
@@ -101,13 +101,13 @@ export function StudySession({ initialCards }: { initialCards: CardType[] }) {
         </Button>
       </div>
 
-      <div className="w-full flex justify-between items-center mb-8 text-sm font-medium text-zinc-500">
-        <span>
+      <div className="w-full flex items-center gap-4 mb-8 text-sm font-medium text-zinc-500">
+        <span className="shrink-0 whitespace-nowrap">
           Card {safeIndex + 1} of {orderedCards.length}
         </span>
-        <div className="flex gap-1 flex-1 ml-4 justify-end">
+        <div className="flex min-w-0 flex-1 gap-1 justify-end">
           {isLargeSet ? (
-            <div className="h-1.5 w-full max-w-[200px] bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full max-w-50 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
               <div
                 className="h-full bg-indigo-600 transition-all duration-300 ease-out"
                 style={{
@@ -125,7 +125,7 @@ export function StudySession({ initialCards }: { initialCards: CardType[] }) {
                     : idx < currentIndex
                       ? 'bg-indigo-200 dark:bg-indigo-900/40'
                       : 'bg-zinc-200 dark:bg-zinc-800'
-                }`}
+                } min-w-1 flex-1 max-w-4`}
               />
             ))
           )}
@@ -159,7 +159,7 @@ export function StudySession({ initialCards }: { initialCards: CardType[] }) {
                       <p className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-4">
                         Back
                       </p>
-                      <h2 className="text-xl sm:text-2xl font-serif text-zinc-800 dark:text-zinc-200 leading-relaxed max-w-[90%] break-words">
+                      <h2 className="text-xl sm:text-2xl font-serif text-zinc-800 dark:text-zinc-200 leading-relaxed max-w-[90%] wrap-break-word">
                         {currentCard.back}
                       </h2>
                     </div>
