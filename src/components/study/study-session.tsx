@@ -12,8 +12,10 @@ import {
   Shuffle,
   ArrowDownAZ,
   ArrowUpZA,
+  Volume2,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { speakText } from '@/lib/tts';
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -152,6 +154,17 @@ export function StudySession({ initialCards }: { initialCards: CardType[] }) {
                       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-zinc-900 dark:text-zinc-50 leading-tight">
                         {currentCard.front}
                       </h2>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          // Only play audio — don't let the click flip the card.
+                          e.stopPropagation();
+                          speakText(currentCard.front);
+                        }}
+                        className="mt-6 inline-flex items-center justify-center rounded-full p-3 text-zinc-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors"
+                        aria-label="Play pronunciation">
+                        <Volume2 className="size-5" />
+                      </button>
                     </div>
                   }
                   backContent={
