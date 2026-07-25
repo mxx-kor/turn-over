@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Trash2, FolderOpen } from 'lucide-react';
 import { useState } from 'react';
 import { EditFolderDialog } from '@/components/dashboard/edit-folder-dialog';
+import { formatDate } from '@/lib/utils';
 
 export function FolderList({ initialFolders }: { initialFolders: Folder[] }) {
   const router = useRouter();
@@ -70,7 +71,7 @@ export function FolderList({ initialFolders }: { initialFolders: Folder[] }) {
               </p>
             )}
             <p className="text-xs text-zinc-500">
-              Created {new Date(folder.created_at).toLocaleDateString()}
+              Created {formatDate(folder.created_at)}
             </p>
           </CardContent>
           <CardFooter className="justify-end space-x-2 pt-2 pb-4 opacity-0 group-hover:opacity-100 transition-opacity">
